@@ -37,8 +37,8 @@ const work = await Promise.all(
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
-    <div class="chat chat-start shadow-xl animate">
-      <div class="chat-bubble animate">
+    <div class="chat chat-start animate">
+      <div class="chat-bubble shadow-xl animate">
         <h1
           class="animate font-semibold font-bold bg-clip-text text-transparent bg-gradient-to-t from-zinc-200 to-zinc-50 text-6xl py-3 px-1"
         >
@@ -52,13 +52,13 @@ const work = await Promise.all(
           <p class="animate">
             A creative professional turned into code/tech enthusiast who's
             currently diving headfirst into the world of software development
-            through an intensive bootcamp at Headforwards Digital Academy &
-            CodeInstitute.
+            through an intensive bootcamp at <b>Headforwards Digital Academy</b> &
+            <b>CodeInstitute.</b>
           </p>
           <p class="animate">
             My journey is pretty unique – I've experience in game art (where I
-            worked on projects for SEGA and Kwalee) and even managed virtual
-            accounts at Deliveroo!
+            worked on projects for <b>SEGA and Kwalee</b>) and even managed virtual
+            accounts at <b>Deliveroo</b>!
           </p>
           <p class="animate">
             Now, I'm embracing my artistic background and analytical mindset
@@ -130,32 +130,31 @@ const work = await Promise.all(
           }
         </ul>
       </section>
-
       <section class="animate space-y-4">
         <div class="chat chat-start">
           <div class="indicator">
-            <div class="chat-bubble animate w-44">
-              <div class="indicator-item"><Confetti /></div>
-              <h5 class="font-semibold text-black dark:text-white">
-                Let's Connect!!
-              </h5>
-            </div>
+        <div class="chat-bubble animate bg-blue-600 text-white">
+          <div class="indicator-item -pl-2"><Confetti /></div>
+          <h5 class="font-semibold">
+            Let's Connect!!
+          </h5>
+        </div>
           </div>
           <br />
           <div class="chat chat-start">
-            <div class="chat-bubble mt-3 animate">
-              <article>
-                <p>
-                  If you want to get in touch with me about something or just to
-                  say hi, reach out on social media or send me an email.
-                </p>
-              </article>
-            </div>
+        <div class="chat-bubble mt-3 animate bg-blue-600">
+          <article>
+            <p class="text-white">
+          If you want to get in touch with me about something or just to
+          say hi, reach out on social media or send me an email.
+            </p>
+          </article>
+        </div>
           </div>
         </div>
         <div class="chat chat-end">
           <ul
-            class="menu menu-horizontal menu-lg bg-base-200 chat-bubble mt-3 animate"
+        class="menu menu-horizontal menu-lg bg-base-200 chat-bubble mt-3 animate bg-gray-200 text-black"
           >
             {
               SOCIALS.map((SOCIAL) => (

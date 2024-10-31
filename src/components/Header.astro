@@ -5,6 +5,7 @@ import { SITE } from "@consts";
 ---
 
 <header class="header">
+  <div class="header-background"></div>
   <Container>
     <div class="flex flex-wrap gap-y-2 justify-between">
       <Link href="/" underline={false}>
@@ -12,20 +13,14 @@ import { SITE } from "@consts";
           {SITE.NAME}
         </div>
       </Link>
-      <nav class="flex gap-1">
-        <Link href="/blog">
+      <nav class="flex gap-4">
+        <Link href="/blog" class="blur-hover">
           blog
         </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/work">
+        <Link href="/work" class="underline-animation">
           work
         </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/projects">
+        <Link href="/projects" class="magnetic-hover">
           projects
         </Link>
       </nav>
@@ -34,15 +29,17 @@ import { SITE } from "@consts";
 </header>
 
 <script>
-  const header = document.querySelector('.header');
-  
-  if (header) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) { // You can adjust this value
-        header.classList.add('compact');
-      } else {
-        header.classList.remove('compact');
-      }
-    });
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.header');
+    
+    if (header) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) { // You can adjust this value
+          header.classList.add('compact');
+        } else {
+          header.classList.remove('compact');
+        }
+      });
+    }
+  });
 </script>

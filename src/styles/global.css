@@ -100,3 +100,11 @@ html #back-to-top {
 html.scrolled #back-to-top {
   @apply opacity-100 pointer-events-auto;
 }
+:root {
+  --theme-transition-duration: 0.3s;
+  --theme-transition-timing: ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
