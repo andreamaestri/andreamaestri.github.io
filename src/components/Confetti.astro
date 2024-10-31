@@ -1,0 +1,114 @@
+<style>
+    button[data-confetti-button] {
+        transition:
+            transform 0.3s,
+            background-color 0.3s;
+        background-color: transparent; /* Initial background color */
+    }
+
+    button[data-confetti-button]:hover {
+        transform: scale(1.2);
+        background-color: transparent; /* Transparent on hover */
+    }
+
+    button[data-confetti-button].clicked {
+        animation: wiggleEffect 0.5s ease-in-out;
+        transition:
+            transform 0.3s ease-in-out,
+            background-color 0.3s; /* Add transition for smooth easing */
+        background-color: #006cb0; /* Dark blue color */
+    }
+
+    @keyframes wiggleEffect {
+        0%, 7% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(-15deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  30% {
+    transform: rotate(6deg);
+  }
+  35% {
+    transform: rotate(-4deg);
+  }
+  40%, 100% {
+    transform: rotate(0);
+    }
+    }
+
+    .emoji {
+        display: none;
+        position: absolute;
+        z-index: 10;
+    }
+
+    .emoji.visible {
+        display: flex !important;
+    }
+</style>
+
+<button
+    data-confetti-button
+    class="btn btn-ghost btn-md rounded-full text-2xl hover:shadow-xl"
+>
+    <span class="relative flex items-center justify-center h-8 w-8">
+        <span
+            class="ping-circle animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+        ></span>
+        <span class="static-circle relative inline-flex rounded-full h-4 w-4 bg-sky-500"></span>
+        <span class="emoji flex items-center justify-center">🥳</span>
+    </span>
+</button>
+
+<script>
+    // Import npm modules.
+    import confetti from "canvas-confetti";
+
+    // Find our component DOM on the page.
+    const buttons = document.querySelectorAll("[data-confetti-button]");
+
+    // Function to generate a random number between min and max
+    function getRandom(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+    }
+
+    // Add event listeners to fire confetti when a button is clicked.
+    buttons.forEach((button) => {
+        const emoji = button.querySelector(".emoji") as HTMLElement;
+        const pingCircle = button.querySelector(".ping-circle") as HTMLElement;
+        const staticCircle = button.querySelector(".static-circle") as HTMLElement;
+
+        button.addEventListener("click", () => {
+            const rect = button.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+
+            confetti({
+                particleCount: Math.floor(getRandom(10, 500)),
+                spread: getRandom(150, 200),
+                startVelocity: getRandom(35, 50),
+                origin: { x: x / window.innerWidth, y: y / window.innerHeight },
+            });
+
+            // Add the clicked class for the click effect
+            button.classList.add("clicked");
+
+            // Toggle visibility of elements
+            emoji.classList.add("visible");
+            pingCircle.style.display = "none";
+            staticCircle.style.display = "none";
+
+            // Remove reset timeout - emoji stays visible
+            setTimeout(() => {
+                button.classList.remove("clicked");
+            }, 500);
+        });
+    });
+</script>
