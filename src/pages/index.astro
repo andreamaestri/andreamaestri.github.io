@@ -46,6 +46,23 @@ const work = await Promise.all(
         </h1>
       </div>
     </div>
+    <div class="chat chat-end">
+      <ul class="menu menu-xs bg-base-200 chat-bubble mt-3 animate bg-gray-200 text-black flex flex-row flex-wrap">
+      {[...SOCIALS, { NAME: SITE.EMAIL, HREF: `mailto:${SITE.EMAIL}`, ICON: 'carbon:email' }].map((SOCIAL) => (
+        <li class="mr-2">
+        <Link
+          data-tip={`${SOCIAL.NAME}`}
+          href={SOCIAL.HREF}
+          external
+          aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}
+          tooltip
+        >
+          <Icon name={`${SOCIAL.ICON}`} />
+        </Link>
+        </li>
+      ))}
+      </ul>
+    </div>
     <div class="space-y-16">
       <section>
         <article class="space-y-4">
@@ -154,7 +171,7 @@ const work = await Promise.all(
         </div>
         <div class="chat chat-end">
           <ul
-        class="menu menu-lg bg-base-200 chat-bubble mt-3 animate bg-gray-200 text-black flex flex-wrap"
+        class="menu menu-lg bg-base-200 chat-bubble mt-3 animate bg-gray-200 text-black flex flex-row flex-wrap"
           >
             {
               SOCIALS.map((SOCIAL) => (
