@@ -4,11 +4,11 @@ import Link from "@components/Link.astro";
 import { SITE } from "@consts";
 ---
 
-<header>
+<header class="header">
   <Container>
     <div class="flex flex-wrap gap-y-2 justify-between">
       <Link href="/" underline={false}>
-        <div class="font-semibold">
+        <div class="site-name">
           {SITE.NAME}
         </div>
       </Link>
@@ -32,3 +32,17 @@ import { SITE } from "@consts";
     </div>
   </Container>
 </header>
+
+<script>
+  const header = document.querySelector('.header');
+  
+  if (header) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) { // You can adjust this value
+        header.classList.add('compact');
+      } else {
+        header.classList.remove('compact');
+      }
+    });
+  }
+</script>

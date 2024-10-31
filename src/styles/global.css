@@ -2,39 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  overflow-y: scroll;
-  color-scheme: light;
-}
+@layer base {
+  html {
+    @apply overflow-y-scroll;
+    color-scheme: light;
+    @apply h-screen;
+  }
 
-html.dark {
-  color-scheme: dark;
-}
+  html.dark {
+    color-scheme: dark;
+  }
 
-html,
-body {
-  @apply size-full;
-}
+  html,
+  body {
+    @apply min-h-screen;
+  }
 
-body {
-  @apply font-sans antialiased;
-  @apply flex flex-col;
-  @apply bg-stone-100 dark:bg-stone-900;
-  @apply text-black/50 dark:text-white/75;
+  body {
+    @apply font-sans antialiased;
+    @apply flex flex-col min-h-screen;
+    @apply bg-zinc-100 dark:bg-zinc-900;
+    @apply text-black/50 dark:text-white/75;
+  }
 }
 
 header {
   @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply bg-stone-100/75 dark:bg-stone-900/25;
-  @apply backdrop-blur-sm saturate-200;
+  @apply bg-zinc-100/75 dark:bg-zinc-800/75;
+  @apply backdrop-blur-sm;
+  @apply border-b border-black/5 dark:border-white/5;
+  transition: all 0.3s ease;
+}
+
+header .site-name {
+  @apply text-2xl; 
+  @apply font-black;
+  transition: all 0.3s ease;
+}
+
+header.compact {
+  @apply py-2; 
+  @apply shadow-lg; 
+  @apply bg-zinc-100/90 dark:bg-zinc-900/95;
+  @apply border-b border-black/10 dark:border-white/5;
+}
+
+header.compact .site-name {
+  @apply text-lg; 
+}
+
+header.compact :global(.container) {
+  @apply scale-95;
+  transform-origin: left;
 }
 
 main {
   @apply flex-1 py-32;
+  @apply min-h-[calc(100vh-6rem)];
 }
 
 footer {
   @apply py-5 text-sm;
+  @apply border-t border-black/5 dark:border-white/5;
 }
 
 article {
