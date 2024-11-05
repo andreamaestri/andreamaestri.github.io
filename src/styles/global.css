@@ -31,7 +31,7 @@
 
 header {
   @apply fixed top-0 left-0 right-0 z-50;
-  @apply py-4 md:py-5;
+  @apply py-4 px-3 md:py-5;
   @apply bg-zinc-100/75 dark:bg-zinc-800/75;
   @apply backdrop-blur-sm;
   @apply border-b border-black/5 dark:border-white/5;
@@ -51,7 +51,7 @@ header .container {
 }
 
 .site-name {
-  @apply text-xl md:text-2xl;
+  @apply text-xl md:text-3xl;
   @apply font-black;
   @apply select-none;
 }
@@ -76,7 +76,7 @@ header.compact {
 }
 
 header.compact .site-name {
-  @apply text-base md:text-lg;
+  @apply text-base md:text-xl;
 }
 
 @media (max-width: 640px) {
