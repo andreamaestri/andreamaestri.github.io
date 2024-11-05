@@ -19,10 +19,10 @@ const { publicId, width, height } = Astro.props;
       src={publicId}
       width={width}
       height={height}
-      crop="thumb"
-      format="webp"
-      quality={80}
-      loading="lazy"
+      crop={{
+        type: 'thumb',
+        source: true
+      }}
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
       alt=""
     />
