@@ -71,9 +71,19 @@ const assets = await getCollection(
     });
   };
 
+  // Prevent multiple initializations
+  let isGalleryInitialized = false;
+
+  const initializeGallery = () => {
+    if (!isGalleryInitialized) {
+      initGallery();
+      isGalleryInitialized = true;
+    }
+  };
+
   // Initialize gallery after page load
-  document.addEventListener("astro:page-load", initGallery);
+  document.addEventListener("astro:page-load", initializeGallery);
   // Initial load
-  initGallery();
+  initializeGallery();
 </script>
 
