@@ -23,6 +23,9 @@
     @apply flex flex-col min-h-screen;
     @apply bg-zinc-100 dark:bg-zinc-900;
     @apply text-black/50 dark:text-white/75;
+    @apply overflow-x-hidden; /* Prevent body horizontal scroll */
+    @apply w-full;
+    position: relative;
   }
 }
 
@@ -31,7 +34,16 @@ header {
   @apply bg-zinc-100/75 dark:bg-zinc-800/75;
   @apply backdrop-blur-sm;
   @apply border-b border-black/5 dark:border-white/5;
+  @apply w-full max-w-[100vw];  /* Add width constraints */
   transition: all 0.3s ease;
+  overflow-x: hidden; /* Prevent header content overflow */
+}
+
+/* Add container constraints */
+header .container {
+  @apply px-4 mx-auto;
+  @apply max-w-[100vw];
+  width: calc(100% - 2rem); /* Account for padding */
 }
 
 header .site-name {
