@@ -1,4 +1,5 @@
 ---
+// Header.astro
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
@@ -7,20 +8,20 @@ import { SITE } from "@consts";
 <header class="header">
   <div class="header-background"></div>
   <Container>
-    <div class="flex flex-wrap gap-y-2 justify-between">
+    <div class="flex items-center justify-between">
       <Link href="/" underline={false}>
         <div class="site-name">
           {SITE.NAME}
         </div>
       </Link>
-      <nav class="flex gap-4">
-        <Link href="/blog" class="blur-hover">
+      <nav class="nav-menu">
+        <Link href="/blog" class="blur-hover nav-link">
           blog
         </Link>
-        <Link href="/work" class="underline-animation">
+        <Link href="/work" class="underline-animation nav-link">
           work
         </Link>
-        <Link href="/projects" class="magnetic-hover">
+        <Link href="/projects" class="magnetic-hover nav-link">
           projects
         </Link>
       </nav>
