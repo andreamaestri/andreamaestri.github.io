@@ -18,16 +18,14 @@ const assetsPromise = getCollection(
 
 <section class="full-width-container">
   <div class="relative">
-    <div class="embla">
       <div class="embla__viewport">
         <div class="embla__container">
           {assetsPromise.then((assets) =>
             assets.map((asset) => (
               <ImageCard
                 publicId={asset.data.public_id}
-                width={asset.data.width}
-                height={asset.data.height}
-                class="w-full sm:w-[600px] md:w-[800px] lg:w-[1000px] h-auto object-cover"
+                width={800}
+                height={1067}
               />
             ))
           )}
@@ -37,19 +35,45 @@ const assetsPromise = getCollection(
   </div>
 </section>
 
-<style>
-  .embla__container {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-  }
+<script>
+  const initGallery = () => {
+    Promise.all([
+      import("embla-carousel"),
+      import("embla-carousel-autoplay")
+    ]).then(([{ default: EmblaCarousel }, { default: Autoplay }]) => {
+      const emblaNode = document.querySelector(".embla__viewport");
+      if (emblaNode instanceof HTMLElement) {
+        const options = { loop: true };
+        const autoplayOptions = { delay: 4000, stopOnInteraction: false };
+        
+        // Create carousel with autoplay plugin
+        EmblaCarousel(emblaNode, options, [Autoplay(autoplayOptions)]);
+        
+        // Handle image loading
+        const images = document.querySelectorAll(".gallery-image");
+        images.forEach((img) => {
+          if (img instanceof HTMLImageElement) {
+            img.classList.add("loaded");
+            img.previousElementSibling?.remove();
+          }
+        });
+      }
+    });
+  };
 
-  @media (max-width: 640px) {
-    .embla__container {
-      gap: 0.5rem;
-      padding: 0.5rem;
+  // Prevent multiple initializations
+  let isGalleryInitialized = false;
+
+  const initializeGallery = () => {
+    if (!isGalleryInitialized) {
+      initGallery();
+      isGalleryInitialized = true;
     }
-  }
-</style>
+  };
 
-<!-- Rest of your script remains the same -->
+  // Initialize gallery after page load
+  document.addEventListener("astro:page-load", initializeGallery);
+  // Initial load
+  initializeGallery();
+</script>
+
