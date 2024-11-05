@@ -1,11 +1,11 @@
 import { defineCollection, z } from "astro:content";
-import { cldAssetsLoader } from "astro-cloudinary/loaders";
+import { cldAssetsLoader } from 'astro-cloudinary/loaders';
 
 // Define the collections
 const assets = defineCollection({
   loader: cldAssetsLoader({
     limit: 1200,
-    folder: "2024", // Replace with your folder name
+    folder: '2024', // Replace with your folder name
   }),
 });
 
