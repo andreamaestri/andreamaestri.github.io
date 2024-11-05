@@ -1,76 +1,55 @@
 ---
-title: "Astro Sphere"
-description: "Portfolio and blog build with astro."
-date: "Mar 18 2024"
-demoURL: "https://astro-sphere-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-sphere"
+title: ".MENTAL_HEALTH_AWARENESS"
+description: "An all-in-one resource for mental well-being, designed to support users in accessing vital mental health resources."
+date: "Sep 30 2024"
+demoURL: "https://andreamaestri.github.io/love-MHA/"
+repoURL: "https://github.com/andreamaestri/love-MHA"
 ---
 
-![Astro Sphere Lighthouse Score](/astro-sphere.jpg)
+## 📸 Screenshots
 
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
+<div class="mockup-window border border-base-300 mt-4">
+  <div class="flex justify-center bg-base-200">
+    <img src="https://github.com/andreamaestri/love-MHA/blob/main/assets/images/Your%20mind%20plan.jpeg?raw=true" alt="Feature Screenshot 2">
+  </div>
+</div>
 
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
+love-MHA is a web application leveraging **HTML** and **Bootstrap 5** to provide an accessible and responsive platform for mental health awareness.
 
 ## 🚀 Deploy your own
 
 <div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere">
+  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/andreamaestri/love-MHA">
     <img src="/deploy_vercel.svg" />
   </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere">
+  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/andreamaestri/love-MHA">
     <img src="/deploy_netlify.svg" />
   </a>
 </div>
 
 ## 📋 Features
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
+- ✅ Accessible and responsive design
+- ✅ Integration with NHS API/Widget
+- ✅ High-performance animations with GSAP and anime.js
+- ✅ Scalable vector graphics (SVG)
+- ✅ Comprehensive mental health resources
+- ✅ Semantic HTML5 markup
+- ✅ Advanced CSS3 styling with Flexbox and Grid
+- ✅ Dynamic client-side interactivity with JavaScript
 
-## 💯 Lighthouse score
-![Astro Sphere Lighthouse Score](/lighthouse.png)
+## 💯 Tools Used
 
-## 🕊️ Lightweight
-All pages under 100kb (including fonts)
-
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
-
-## 📄 Configuration
-
-The blog posts on the demo serve as the documentation and configuration.
-
-## 💻 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
-
-## 🏛️ License
-
-MIT
+- **HTML5**: Semantic markup for content structure.
+- **CSS3**: Advanced styling with Flexbox and Grid.
+- **Bootstrap 5**: Responsive UI components.
+- **JavaScript**: Dynamic client-side interactivity.
+- **GSAP**: High-performance animations.
+- **SVG**: Scalable vector graphics.
+- **External Resources**:
+  - [Bootstrap Examples](https://getbootstrap.com/docs/5.3/examples/)
+  - Codepen Examples:
+    - [Example 1](https://codepen.io/codingyaar/pen/ExLZayv)
+    - [Example 2](https://codepen.io/collection/AEbkkJ?cursor=eyJwYWdlIjo0fQ==)
+    - [Example 3](https://codepen.io/stoic25/pen/xwVZyo)
+- **GitHub Copilot**: Assisted in troubleshooting and understanding code.
