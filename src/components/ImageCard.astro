@@ -1,0 +1,30 @@
+---
+// src/components/ImageCard.astro
+import { CldImage } from "astro-cloudinary";
+
+interface Props {
+  publicId: string;
+  width: number;
+  height: number;
+}
+
+const { publicId, width, height } = Astro.props;
+---
+
+<div class="embla__slide">
+  <div class="image-wrapper relative">
+    <div class="placeholder animate-pulse bg-gray-200 dark:bg-gray-700" />
+    <CldImage
+      class="gallery-image"
+      src={publicId}
+      width={width}
+      height={height}
+      crop="thumb"
+      format="webp"
+      quality={80}
+      loading="lazy"
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      alt=""
+    />
+  </div>
+</div>

@@ -51,6 +51,13 @@ export default {
           900: '#18181b',
           950: '#0f0f10',
         },
+        text: {
+          light: '#333333', // Darker text color for better contrast
+          dark: '#ffffff',
+        },
+        n: {
+          DEFAULT: 'oklch(0.5 0.1 0.1)', // Define a default value for --n
+        },
       },
       animation: {
         'gradient': 'gradient 8s linear infinite',
@@ -75,37 +82,48 @@ export default {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"), 
+    require("@tailwindcss/typography")({
+      modifiers: ['DEFAULT', 'sm', 'lg', 'xl', '2xl'],
+      theme: {
+        extend: {
+          typography: {
+            DEFAULT: {
+              css: {
+                color: '#333333', // Darker text color for better contrast
+              },
+            },
+          },
+        },
+      },
+    }), 
     require("daisyui")
   ],
   daisyui: {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["light"],
-          "primary": "#4b4ff7",          // Using our custom primary color
-          "primary-focus": "#3d3ee6",
-          "primary-content": "#ffffff",
-          "secondary": "#7779a5",        // Using our custom secondary color
-          "secondary-focus": "#636591",
-          "secondary-content": "#ffffff",
+          "primary": "#6b7cfa",
+          "secondary": "#8d92b7",
+          "accent": "#4b4ff7",
+          "neutral": "#f4f4f5",
           "base-100": "#ffffff",
-          "base-200": "#f8f9fc",
-          "base-300": "#f0f1f7",
-          "base-content": "#1c1d54",
+          "info": "#3ABFF8",
+          "success": "#36D399",
+          "warning": "#FBBD23",
+          "error": "#F87272",
+          "text": "#333333", // Darker text color for better contrast
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["dark"],
-          "primary": "#6b7cfa",          // Lighter version for dark mode
-          "primary-focus": "#4b4ff7",
-          "primary-content": "#ffffff",
-          "secondary": "#8d92b7",        // Lighter version for dark mode
-          "secondary-focus": "#7779a5",
-          "secondary-content": "#ffffff",
-          "base-100": "#1c1d54",
-          "base-200": "#292b3b",
-          "base-300": "#464961",
-          "base-content": "#f0f1f7",
+          "primary": "#4b4ff7",
+          "secondary": "#636591",
+          "accent": "#8da2fb",
+          "neutral": "#18181b",
+          "base-100": "#2d3293",
+          "info": "#3ABFF8",
+          "success": "#36D399",
+          "warning": "#FBBD23",
+          "error": "#F87272",
+          "text": "#ffffff",
         },
       },
     ],
