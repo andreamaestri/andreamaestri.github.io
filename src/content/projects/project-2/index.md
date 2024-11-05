@@ -1,7 +1,7 @@
 ---
 title: "WattsUp"
 description: "Delivering energy rates for Octopus Energy users in a clear and user-friendly manner."
-date: "Mar 26 2024"
+date: "October 26 2024"
 demoURL: "https://wattup.netlify.app"
 repoURL: "https://github.com/andreamaestri/hackathon-1"
 ---
