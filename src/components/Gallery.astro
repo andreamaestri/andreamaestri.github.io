@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import { CldImage } from "astro-cloudinary";
+import { Icon } from "astro-icon/components";
+
+const assets = await getCollection(
+  "assets",
+  ({ data }) => data.public_id && data.width && data.height
+);
+---
+<div class="w-auto flex"><h1 class="text-2xl mb-4">Where I've been lately...</h1><Icon name="carbon:binoculars" class="text-2xl ml-3 mt-1"/></div>
+<section class="full-width-container">
+  <div class="relative">
+    <div class="embla">
+      <div class="embla__viewport">
+        <div class="embla__container">
+          {
+            assets.map((asset) => (
+              <div class="embla__slide">
+                <div class="image-wrapper relative">
+                  <div class="placeholder animate-pulse bg-gray-200 dark:bg-gray-700" />
+                  <CldImage
+                    class="gallery-image"
+                    src={asset.data.public_id}
+                    width={800}
+                    height={1067}
+                    crop="thumb"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    alt=""
+                  />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initGallery = () => {
+    Promise.all([
+      import("embla-carousel"),
+      import("embla-carousel-autoplay")
+    ]).then(([{ default: EmblaCarousel }, { default: Autoplay }]) => {
+      const emblaNode = document.querySelector(".embla__viewport");
+      if (emblaNode instanceof HTMLElement) {
+        const options = { loop: true };
+        const autoplayOptions = { delay: 4000, stopOnInteraction: false };
+        
+        // Create carousel with autoplay plugin
+        EmblaCarousel(emblaNode, options, [Autoplay(autoplayOptions)]);
+        
+        // Handle image loading and placeholder
+        const images = document.querySelectorAll(".gallery-image");
+        images.forEach((img) => {
+          if (img instanceof HTMLImageElement) {
+            if (img.complete) {
+              img.classList.add("loaded");
+              img.previousElementSibling?.remove();
+            } else {
+              img.onload = () => {
+                img.classList.add("loaded");
+                img.previousElementSibling?.remove();
+              };
+            }
+          }
+        });
+      }
+    });
+  };
+
+  // Initialize gallery after page load
+  document.addEventListener("astro:page-load", initGallery);
+  // Initial load
+  initGallery();
+</script>
+

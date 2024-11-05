@@ -137,18 +137,18 @@ import BackToTop from "@components/BackToTop.astro";
     </style>
 
     <script>
-      const themeController = document.querySelector('.theme-controller') as HTMLInputElement;
+      const themeController = document.querySelector(".theme-controller") as HTMLInputElement;
 
-      themeController.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+      themeController.checked = document.documentElement.getAttribute("data-theme") === "dark";
 
-      themeController.addEventListener('change', (e) => {
+      themeController.addEventListener("change", (e) => {
         const target = e.target as HTMLInputElement;
         if (target.checked) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          localStorage.setItem('theme', 'dark');
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
         } else {
-          document.documentElement.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
         }
       });
     </script>

@@ -29,15 +29,15 @@ import { SITE } from "@consts";
 </header>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.header');
+  document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector(".header");
     
     if (header) {
-      window.addEventListener('scroll', () => {
+      window.addEventListener("scroll", () => {
         if (window.scrollY > 50) { // You can adjust this value
-          header.classList.add('compact');
+          header.classList.add("compact");
         } else {
-          header.classList.remove('compact');
+          header.classList.remove("compact");
         }
       });
     }

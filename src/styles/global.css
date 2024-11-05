@@ -108,3 +108,54 @@ html.scrolled #back-to-top {
 html {
   scroll-behavior: smooth;
 }
+.full-width-container {
+  max-width: none !important;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  position: relative;
+}
+
+.embla {
+  @apply overflow-hidden w-full;
+}
+
+.embla__viewport {
+  @apply overflow-hidden;
+}
+
+.embla__container {
+  @apply flex gap-4 -ml-4;
+  backface-visibility: hidden;
+}
+
+.embla__slide {
+  @apply flex-[0_0_calc(100%/3-1rem)] min-w-0;
+}
+
+@media (max-width: 1024px) {
+  .embla__slide {
+    @apply flex-[0_0_calc(100%/2-1rem)];
+  }
+}
+
+@media (max-width: 640px) {
+  .embla__slide {
+    @apply flex-[0_0_calc(100%-1rem)];
+  }
+}
+.gallery-image {
+  @apply opacity-0 transition-all duration-300 ease-in-out rounded-xl hover:scale-105;
+}
+
+.gallery-image.loaded {
+  @apply opacity-100;
+}
+
+.image-wrapper {
+  @apply relative aspect-[3/4] w-full overflow-hidden rounded-xl;
+}
+
+.placeholder {
+  @apply absolute inset-0 rounded-xl;
+}

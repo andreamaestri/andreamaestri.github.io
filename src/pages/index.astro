@@ -8,6 +8,7 @@ import { dateRange } from "@lib/utils";
 import { SITE, HOME, SOCIALS } from "@consts";
 import { Icon } from "astro-icon/components";
 import Confetti from "@components/Confetti.astro";
+import Gallery from "@components/Gallery.astro";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -81,8 +82,8 @@ const work = await Promise.all(
             Now, I'm embracing my artistic background and analytical mindset
             into building beautiful, functional code. When I'm not tackiling
             coding challenges, you'll find me experimenting with recipes in the
-            kitchen, walking around Cornwall's breathtaking landscapes, or
-            exploring narrative-driven video games for inspiration.
+            kitchen, walking around <b>Cornwall's</b> breathtaking landscapes, or
+            exploring story-driven video games for inspiration.
           </p>
         </article>
       </section>
@@ -147,6 +148,7 @@ const work = await Promise.all(
           }
         </ul>
       </section>
+      <section><Gallery /></section>
       <section class="animate space-y-4">
         <div class="chat chat-start">
           <div class="indicator">

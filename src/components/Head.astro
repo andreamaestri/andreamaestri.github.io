@@ -1,12 +1,12 @@
 ---
 import "../styles/global.css";
 
-import '@fontsource/ibm-plex-sans/300.css';
-import '@fontsource/ibm-plex-sans/600.css';
-import '@fontsource/ibm-plex-sans/700.css';
-import '@fontsource/ibm-plex-serif/300.css';
-import '@fontsource/ibm-plex-serif/600.css';
-import '@fontsource/ibm-plex-serif/700.css';
+import "@fontsource/ibm-plex-sans/300.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-sans/700.css";
+import "@fontsource/ibm-plex-serif/300.css";
+import "@fontsource/ibm-plex-serif/600.css";
+import "@fontsource/ibm-plex-serif/700.css";
 import ibm300 from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-300-normal.woff2";
 import ibm600 from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2";
 import ibm700 from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2";
@@ -101,14 +101,14 @@ const { title, description, image = "/nano.png" } = Astro.props;
     const backToPrev = document.getElementById("back-to-prev");
     backToPrev?.addEventListener("click", () => window.history.back());
 
-    const themeToggle = document.querySelector('.theme-controller');
+    const themeToggle = document.querySelector(".theme-controller");
     if (themeToggle instanceof HTMLInputElement) {
-      themeToggle.checked = document.documentElement.getAttribute('data-theme') === 'dark';
-      themeToggle.addEventListener('change', (e) => {
+      themeToggle.checked = document.documentElement.getAttribute("data-theme") === "dark";
+      themeToggle.addEventListener("change", (e) => {
         const target = e.target;
         if (target instanceof HTMLInputElement) {
-          const theme = target.checked ? 'dark' : 'light';
-          localStorage.setItem('theme', theme);
+          const theme = target.checked ? "dark" : "light";
+          localStorage.setItem("theme", theme);
           toggleTheme(theme);
         }
       });
@@ -117,7 +117,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
     window.matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", event => {
         if (localStorage.theme === "system") {
-          toggleTheme(event.matches ? 'dark' : 'light');
+          toggleTheme(event.matches ? "dark" : "light");
         }
       });
 
@@ -151,8 +151,8 @@ const { title, description, image = "/nano.png" } = Astro.props;
 
   function toggleTheme(theme) {
     requestAnimationFrame(() => {
-      document.documentElement.setAttribute('data-theme', theme);
-      document.documentElement.classList.toggle("dark", theme === 'dark');
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.classList.toggle("dark", theme === "dark");
     });
   }
 
@@ -161,7 +161,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
     if (userTheme === "light" || userTheme === "dark") {
       toggleTheme(userTheme);
     } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light';
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       toggleTheme(systemTheme);
     }
   }

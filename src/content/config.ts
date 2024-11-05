@@ -1,4 +1,13 @@
 import { defineCollection, z } from "astro:content";
+import { cldAssetsLoader } from "astro-cloudinary/loaders";
+
+// Define the collections
+const assets = defineCollection({
+  loader: cldAssetsLoader({
+    limit: 1200,
+    folder: "2024", // Replace with your folder name
+  }),
+});
 
 const blog = defineCollection({
   type: "content",
@@ -6,7 +15,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
-    draft: z.boolean().optional()
+    draft: z.boolean().optional(),
   }),
 });
 
@@ -22,14 +31,13 @@ const work = defineCollection({
 
 const projects = defineCollection({
   type: "content",
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-    draft: z.boolean().optional(),
-    demoURL: z.string().optional(),
-    repoURL: z.string().optional()
-  }),
+  // Include the schema and other configurations as needed
 });
 
-export const collections = { blog, work, projects };
+// Export all collections in the `collections` object
+export const collections = {
+  assets,
+  blog,
+  work,
+  projects,
+};
