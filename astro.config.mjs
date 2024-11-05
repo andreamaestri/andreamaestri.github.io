@@ -11,4 +11,11 @@ export default defineConfig({
   experimental: {
     contentLayer: true,
   },
+  vite: {
+      define: {
+        'process.env.PUBLIC_CLOUDINARY_CLOUD_NAME': JSON.stringify(process.env.PUBLIC_CLOUDINARY_CLOUD_NAME),
+        'process.env.PUBLIC_CLOUDINARY_API_KEY': JSON.stringify(process.env.PUBLIC_CLOUDINARY_API_KEY),
+        'process.env.CLOUDINARY_API_SECRET': JSON.stringify(process.env.CLOUDINARY_API_SECRET),
+      },
+  },
 });
