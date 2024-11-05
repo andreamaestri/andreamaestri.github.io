@@ -159,16 +159,18 @@ html {
 }
 
 .embla__viewport {
-  @apply overflow-hidden;
+  @apply overflow-hidden rounded-xl;
 }
 
 .embla__container {
-  @apply flex gap-4 -ml-4;
+  @apply flex gap-4 rounded-xl;
   backface-visibility: hidden;
 }
 
 .embla__slide {
-  @apply flex-[0_0_calc(100%/3-1rem)] min-w-0;
+  @apply flex-[0_0_calc(100%/3-1rem)] rounded-xl min-w-0;
+  margin-left: 0;
+  z-index: -3;
 }
 
 @media (max-width: 1024px) {
@@ -184,6 +186,7 @@ html {
 }
 .gallery-image {
   @apply opacity-0 transition-all duration-300 ease-in-out rounded-xl hover:scale-105;
+  z-index: 2;
 }
 
 .gallery-image.loaded {
@@ -192,6 +195,8 @@ html {
 
 .image-wrapper {
   @apply relative aspect-[3/4] w-full overflow-hidden rounded-xl;
+  z-index: -1;
+  height: auto; /* Ensure the wrapper grows with the image */
 }
 
 .placeholder {

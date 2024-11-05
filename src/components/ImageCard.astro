@@ -11,20 +11,20 @@ interface Props {
 const { publicId, width, height } = Astro.props;
 ---
 
-<div class="embla__slide">
-  <div class="image-wrapper relative">
-    <div class="placeholder animate-pulse bg-gray-200 dark:bg-gray-700" />
-    <CldImage
-      class="gallery-image"
-      src={publicId}
-      width={width}
-      height={height}
-      crop={{
-        type: "thumb",
-        source: true
-      }}
-      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      alt=""
-    />
-  </div>
+<div class="embla__slide group rounded-xl">
+    <div class="image-wrapper overflow-visible group-hover:scale-105 rounded-xl">
+        <div class="placeholder animate-pulse bg-gray-200 dark:bg-gray-700 group-hover:scale-105" />
+        <CldImage
+            class="gallery-image transition-transform duration-300 group-hover:scale-105 rounded-xl"
+            src={publicId}
+            width={width}
+            height={height}
+            crop={{
+                type: "thumb",
+                source: true
+            }}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            alt=""
+        />
+    </div>
 </div>
