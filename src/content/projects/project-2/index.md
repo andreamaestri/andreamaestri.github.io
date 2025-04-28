@@ -7,8 +7,8 @@ repoURL: "https://github.com/andreamaestri/hackathon-1"
 ---
 
 
-  <div class="mockup-window border-base-300 border">
-  <div class="border-base-300 flex justify-center border-t">
+  <div class="border rounded-lg overflow-hidden">
+  <div class="border-t flex justify-center">
     <img src="https://res.cloudinary.com/dxlqj5b80/image/upload/v1730846041/blog/jenwwyz62jolifg1sqmk.png" alt="WattsUp Screenshot">
   </div>
 </div>

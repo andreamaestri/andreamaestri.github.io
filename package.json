@@ -44,7 +44,6 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
-    "@types/canvas-confetti": "^1.6.4",
-    "daisyui": "^4.12.14"
+    "@types/canvas-confetti": "^1.6.4"
   }
 }

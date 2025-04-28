@@ -100,11 +100,9 @@ const { title, description, image = "/nano.png" } = Astro.props;
     backToTop?.addEventListener("click", (event) => scrollToTop(event));
 
     const backToPrev = document.getElementById("back-to-prev");
-    backToPrev?.addEventListener("click", () => window.history.back());
-
-    const themeToggle = document.querySelector(".theme-controller");
+    backToPrev?.addEventListener("click", () => window.history.back());    const themeToggle = document.querySelector(".theme-controller");
     if (themeToggle instanceof HTMLInputElement) {
-      themeToggle.checked = document.documentElement.getAttribute("data-theme") === "dark";
+      themeToggle.checked = document.documentElement.classList.contains("dark");
       themeToggle.addEventListener("change", (e) => {
         const target = e.target;
         if (target instanceof HTMLInputElement) {
@@ -149,10 +147,8 @@ const { title, description, image = "/nano.png" } = Astro.props;
       behavior: "smooth"
     });
   }
-
   function toggleTheme(theme) {
     requestAnimationFrame(() => {
-      document.documentElement.setAttribute("data-theme", theme);
       document.documentElement.classList.toggle("dark", theme === "dark");
     });
   }

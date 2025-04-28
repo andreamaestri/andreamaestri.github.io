@@ -8,8 +8,8 @@ repoURL: "https://github.com/andreamaestri/love-MHA"
 
 ## 📸 Screenshots
 
-<div class="mockup-window border border-base-300 mt-4">
-  <div class="flex justify-center bg-base-200">
+<div class="border rounded-lg overflow-hidden mt-4">
+  <div class="bg-gray-100 flex justify-center">
     <img src="https://github.com/andreamaestri/love-MHA/blob/main/assets/images/Your%20mind%20plan.jpeg?raw=true" alt="Feature Screenshot 2">
   </div>
 </div>

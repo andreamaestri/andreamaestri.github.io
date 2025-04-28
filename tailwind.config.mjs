@@ -2,7 +2,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ["class", '[data-theme="dark"]'],
+  darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
@@ -60,79 +60,35 @@ export default {
         },
       },
       animation: {
-        'gradient': 'gradient 8s linear infinite',
-        'float': 'float 3s ease-in-out infinite',
+        gradient: "gradient 8s linear infinite",
+        float: "float 3s ease-in-out infinite",
       },
       keyframes: {
         gradient: {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
           },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
           },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
         },
       },
-    },
-  },
-  plugins: [
-    require("@tailwindcss/typography")({
-      modifiers: ['DEFAULT', 'sm', 'lg', 'xl', '2xl'],
-      theme: {
-        extend: {
-          typography: {
-            DEFAULT: {
-              css: {
-                color: '#333333', // Darker text color for better contrast
-              },
-            },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "#333333", // Darker text color for better contrast
           },
         },
+        // add sm, lg, xl, 2xl variants as needed
       },
-    }), 
-    require("daisyui")
+    },
+  },  plugins: [
+    require("@tailwindcss/typography"),
   ],
-  daisyui: {
-    themes: [
-      {
-        light: {
-          "primary": "#6b7cfa",
-          "secondary": "#8d92b7",
-          "accent": "#4b4ff7",
-          "neutral": "#f4f4f5",
-          "base-100": "#ffffff",
-          "info": "#3ABFF8",
-          "success": "#36D399",
-          "warning": "#FBBD23",
-          "error": "#F87272",
-          "text": "#333333", // Darker text color for better contrast
-        },
-        dark: {
-          "primary": "#4b4ff7",
-          "secondary": "#636591",
-          "accent": "#8da2fb",
-          "neutral": "#18181b",
-          "base-100": "#2d3293",
-          "info": "#3ABFF8",
-          "success": "#36D399",
-          "warning": "#FBBD23",
-          "error": "#F87272",
-          "text": "#ffffff",
-        },
-      },
-    ],
-    darkTheme: "dark",
-    base: true,
-    styled: true,
-    utils: true,
-    prefix: "",
-    logs: true,
-    themeRoot: ":root",
-  },
 };
