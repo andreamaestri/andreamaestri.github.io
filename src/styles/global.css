@@ -1,6 +1,24 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+
+@config '../../tailwind.config.mjs';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   html {
@@ -29,84 +47,86 @@
   }
 }
 
-header {
-  @apply fixed top-0 left-0 right-0 z-50;
-  @apply py-4 px-3 md:py-5;
-  @apply bg-zinc-100/75 dark:bg-zinc-800/75;
-  @apply backdrop-blur-sm;
-  @apply border-b border-black/5 dark:border-white/5;
-  @apply w-full max-w-[100vw];
-  @apply touch-manipulation;
-  transition: all 0.3s ease;
-}
+@layer utilities {
+  header {
+    @apply fixed top-0 left-0 right-0 z-50;
+    @apply py-4 px-3 md:py-5;
+    @apply bg-zinc-100/75 dark:bg-zinc-800/75;
+    @apply backdrop-blur-xs;
+    @apply border-b border-black/5 dark:border-white/5;
+    @apply w-full max-w-[100vw];
+    @apply touch-manipulation;
+    transition: all 0.3s ease;
+  }
 
-.header-background {
-  @apply absolute inset-0 -z-10;
-  @apply bg-gradient-to-b from-zinc-100/95 to-zinc-100/75 dark:from-zinc-800/95 dark:to-zinc-800/75;
-}
+  .header-background {
+    @apply absolute inset-0 -z-10;
+    @apply bg-linear-to-b from-zinc-100/95 to-zinc-100/75 dark:from-zinc-800/95 dark:to-zinc-800/75;
+  }
 
-header .container {
-  @apply px-4 mx-auto;
-  @apply max-w-full md:max-w-[100vw];
-}
-
-.site-name {
-  @apply text-xl md:text-3xl;
-  @apply font-black;
-  @apply select-none;
-}
-
-.nav-menu {
-  @apply flex items-center gap-3 md:gap-4;
-  @apply text-sm md:text-base;
-}
-
-.nav-link {
-  @apply px-2 py-1;
-  @apply rounded-lg;
-  @apply transition-colors duration-200;
-  @apply hover:bg-black/5 dark:hover:bg-white/5;
-  @apply active:bg-black/10 dark:active:bg-white/10;
-}
-
-header.compact {
-  @apply py-2;
-  @apply shadow-lg;
-  @apply bg-zinc-100/90 dark:bg-zinc-900/95;
-}
-
-header.compact .site-name {
-  @apply text-base md:text-xl;
-}
-
-@media (max-width: 640px) {
   header .container {
-    @apply px-3;
+    @apply px-4 mx-auto;
+    @apply max-w-full md:max-w-[100vw];
   }
-  
+
+  .site-name {
+    @apply text-xl md:text-3xl;
+    @apply font-black;
+    @apply select-none;
+  }
+
   .nav-menu {
-    @apply gap-2;
+    @apply flex items-center gap-3 md:gap-4;
+    @apply text-sm md:text-base;
   }
-  
+
   .nav-link {
-    @apply px-1.5 py-0.5;
+    @apply px-2 py-1;
+    @apply rounded-lg;
+    @apply transition-colors duration-200;
+    @apply hover:bg-black/5 dark:hover:bg-white/5;
+    @apply active:bg-black/10 dark:active:bg-white/10;
   }
-}
 
-main {
-  @apply flex-1 py-32;
-  @apply min-h-[calc(100vh-6rem)];
-}
+  header.compact {
+    @apply py-2;
+    @apply shadow-lg;
+    @apply bg-zinc-100/90 dark:bg-zinc-900/95;
+  }
 
-footer {
-  @apply py-5 text-sm;
-  @apply border-t border-black/5 dark:border-white/5;
-}
+  header.compact .site-name {
+    @apply text-base md:text-xl;
+  }
 
-article {
-  @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
-  @apply prose-headings:font-semibold prose-p:font-serif;
-  @apply prose-headings:text-zinc-900 prose-headings:dark:text-zinc-100;
+  @media (max-width: 640px) {
+    header .container {
+      @apply px-3;
+    }
+
+    .nav-menu {
+      @apply gap-2;
+    }
+
+    .nav-link {
+      @apply px-1.5 py-0.5;
+    }
+  }
+
+  main {
+    @apply flex-1 py-32;
+    @apply min-h-[calc(100vh-6rem)];
+  }
+
+  footer {
+    @apply py-5 text-sm;
+    @apply border-t border-black/5 dark:border-white/5;
+  }
+
+  article {
+    @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
+    @apply prose-headings:font-semibold prose-p:font-serif;
+    @apply prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100;
+  }
 }
 
 @layer utilities {
@@ -194,7 +214,7 @@ html {
 }
 
 .image-wrapper {
-  @apply relative aspect-[3/4] w-full overflow-hidden rounded-xl;
+  @apply relative aspect-3/4 w-full overflow-hidden rounded-xl;
   z-index: -1;
   height: auto; /* Ensure the wrapper grows with the image */
 }
