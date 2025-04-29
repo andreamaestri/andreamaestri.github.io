@@ -1,16 +1,14 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
-export default defineConfig({  site: "https://andreamaestri.github.io",
-  integrations: [mdx(), sitemap(), tailwind(), icon()],
+export default defineConfig({
+  site: "https://andreamaestri.github.io",
+  integrations: [mdx(), sitemap(), icon()],
   vite: {
-      define: {
-        'process.env.PUBLIC_CLOUDINARY_CLOUD_NAME': JSON.stringify(process.env.PUBLIC_CLOUDINARY_CLOUD_NAME),
-        'process.env.PUBLIC_CLOUDINARY_API_KEY': JSON.stringify(process.env.PUBLIC_CLOUDINARY_API_KEY),
-        'process.env.CLOUDINARY_API_SECRET': JSON.stringify(process.env.CLOUDINARY_API_SECRET),
-      },
+    plugins: [tailwindcss()],
   },
 });
