@@ -127,6 +127,14 @@
     @apply prose-headings:font-semibold prose-p:font-serif;
     @apply prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100;
   }
+  html.dark article.prose ul > li,
+  html.dark article.prose ol > li,
+  html.dark article.prose p {
+    color: rgba(255,255,255,0.9) !important;
+  }
+  html.dark article.prose strong {
+    color: rgba(255,255,255,1) !important;
+  }
 }
 
 @layer utilities {
