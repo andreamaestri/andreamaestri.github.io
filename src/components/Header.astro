@@ -2,91 +2,21 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
-import { motion } from "motion/react";
+import HeaderScrollAnimation from "@components/HeaderScrollAnimation";
 import { ViewTransitions } from 'astro:transitions';
+
+// Navigation links data
+const navLinks = [
+  { href: "/blog", label: "Blog" },
+  { href: "/work", label: "Work" },
+  { href: "/projects", label: "Projects" }
+];
 ---
 
-<header class="glass-nav">
+<header id="main-header" class="fixed top-0 left-0 w-screen z-50 flex justify-center px-2 sm:px-6 py-2 sm:py-3">
   <ViewTransitions fallback="swap" />
-  <motion.div
-    client:load
-    initial={{ y: -20, opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-    class="nav-wrapper"
-  >
-    <Container>
-      <div class="flex items-center justify-between py-3 px-3">
-        <Link href="/" underline={false}>
-          <motion.div
-            client:load
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            class="site-name text-lg font-semibold tracking-tight"
-            tabIndex={0}
-            aria-label="Go to homepage"
-          >
-            {SITE.NAME}
-          </motion.div>
-        </Link>
-        
-        <nav aria-label="Main navigation">
-          <motion.div 
-            client:load
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            class="flex flex-row items-center gap-6 whitespace-nowrap"
-          >
-            {[
-              { href: "/blog", label: "Blog" },
-              { href: "/work", label: "Work" },
-              { href: "/projects", label: "Projects" }
-            ].map((link, index) => (
-              <motion.div
-                client:load
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 + (index * 0.1) }}
-                class="inline-block"
-              >
-                <Link 
-                  href={link.href} 
-                  class="nav-link inline-block"
-                  transition:animate="slide"
-                >
-                  <motion.span 
-                    client:load
-                    className="nav-label"
-                    whileHover={{ y: -1 }}
-                    whileTap={{ y: 1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
-                    {link.label}
-                  </motion.span>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </nav>
-      </div>
-    </Container>
-  </motion.div>
+  <HeaderScrollAnimation client:load SITE_NAME={SITE.NAME} navLinks={navLinks} />
 </header>
 
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".glass-nav");
-    if (header) {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 24) {
-          header.classList.add("floating");
-        } else {
-          header.classList.remove("floating");
-        }
-      });
-    }
-  });
-</script>
+<!-- Add space to prevent content from hiding under the fixed header -->
+<div class="h-16 sm:h-20 w-full"></div>
