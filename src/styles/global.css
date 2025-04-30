@@ -1,15 +1,12 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
-@config '../../tailwind.config.mjs';
+/* Override any system-generated CSS variables with your custom fonts */
+:root, :host {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  --font-serif: "IBM Plex Serif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+}
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
@@ -44,71 +41,148 @@
     @apply overflow-x-hidden; /* Prevent body horizontal scroll */
     @apply w-full;
     position: relative;
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 }
 
 @layer utilities {
-  header {
-    @apply fixed top-0 left-0 right-0 z-50;
-    @apply py-4 px-3 md:py-5;
-    @apply bg-zinc-100/75 dark:bg-zinc-800/75;
-    @apply backdrop-blur-xs;
-    @apply border-b border-black/5 dark:border-white/5;
-    @apply w-full max-w-[100vw];
-    @apply touch-manipulation;
-    transition: all 0.3s ease;
+  /* Glass nav styling */
+  .glass-nav {
+    @apply fixed top-3 left-1/2 transform -translate-x-1/2 z-50;
+    @apply w-auto;
+    @apply rounded-full;
+    @apply transition-all duration-200 ease-in-out;
+    background: rgba(38,38,38,0.65);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   }
 
-  .header-background {
-    @apply absolute inset-0 -z-10;
-    @apply bg-linear-to-b from-zinc-100/95 to-zinc-100/75 dark:from-zinc-800/95 dark:to-zinc-800/75;
+  .nav-wrapper {
+    @apply w-full h-full;
+    @apply py-2 px-3 md:py-2 md:px-4;
+    @apply rounded-full;
+    position: relative;
+    overflow: hidden;
   }
 
-  header .container {
-    @apply px-4 mx-auto;
-    @apply max-w-full md:max-w-[100vw];
+  .glass-grain {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    overflow: hidden;
+    /* More subtle animated grainy speckles */
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noiseFilter)' /></svg>") repeat 0 0 / 160px 160px,
+      repeating-conic-gradient(rgba(0,0,0,0.025) 0% 25%, rgba(0,0,0,0.005) 0% 50%) 50% 50%/8px 8px,
+      radial-gradient(circle at 60% 40%, rgba(255,255,255,0.04) 0 40%, rgba(0,0,0,0.01) 100%),
+      repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.005) 20px),
+      repeating-radial-gradient(circle at 80% 60%, rgba(0,255,255,0.04) 0, rgba(0,255,255,0.005) 16px),
+      repeating-radial-gradient(circle at 60% 80%, rgba(255,0,255,0.04) 0, rgba(255,0,255,0.005) 18px),
+      repeating-radial-gradient(circle at 40% 40%, rgba(255,255,0,0.04) 0, rgba(255,255,0,0.005) 24px);
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    animation: speckle-move 20s linear infinite alternate, grain-move 12s linear infinite alternate;
+  }
+  @keyframes grain-move {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 20px 20px, 40px 40px, 60px 80px, 80px 60px, 100px 100px, 120px 80px; }
+  }
+  }
+  @keyframes speckle-move {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 40px 40px, 60px 80px, 80px 60px, 100px 100px, 120px 80px; }
+  }
+
+  .glass-nav.floating {
+    @apply top-2 shadow-lg;
+  }
+
+  /* Fix for navigation link layout - target Astro island div children */
+  nav[aria-label="Main navigation"] astro-island > div {
+    display: flex !important;
+  }
+
+  /* Ensure all navigation islands appear in a row */
+  .flex-row astro-island {
+    display: inline-flex !important;
+  }
+
+  /* View Transitions support */
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.3s;
+    }
   }
 
   .site-name {
-    @apply text-xl md:text-3xl;
-    @apply font-black;
-    @apply select-none;
+    @apply font-sans font-semibold text-lg md:text-xl tracking-tight select-none;
+    @apply px-1;
+    color: #fafaf9;
+    letter-spacing: -0.01em;
   }
 
   .nav-menu {
-    @apply flex items-center gap-3 md:gap-4;
-    @apply text-sm md:text-base;
+    @apply flex items-center gap-1 md:gap-2;
+  }
+  
+  .nav-links-container {
+    @apply flex items-center gap-1 md:gap-2;
   }
 
   .nav-link {
-    @apply px-2 py-1;
-    @apply rounded-lg;
-    @apply transition-colors duration-200;
-    @apply hover:bg-black/5 dark:hover:bg-white/5;
-    @apply active:bg-black/10 dark:active:bg-white/10;
+    @apply px-3 py-1.5 md:px-4 md:py-1.5;
+    @apply rounded-full inline-flex items-center;
+    @apply font-sans font-medium text-sm md:text-base;
+    @apply transition-all duration-150;
+    position: relative;
+    color: rgba(255,255,255,0.75);
+    width: auto;
+    display: inline-flex;
+  }
+  .nav-link:focus-visible {
+    outline: 1px solid rgba(255,255,255,0.3);
+    outline-offset: 1px;
+  }
+  .nav-label {
+    position: relative;
+    transition: color 0.15s;
+  }
+  .nav-link:hover .nav-label,
+  .nav-link:focus-visible .nav-label {
+    color: rgba(255,255,255,1);
   }
 
-  header.compact {
-    @apply py-2;
-    @apply shadow-lg;
-    @apply bg-zinc-100/90 dark:bg-zinc-900/95;
+  .nav-anim-link {
+    @apply relative;
+  }
+  .nav-anim-link::after {
+    content: '';
+    @apply absolute left-0 right-0 bottom-0 h-0.5 rounded-full bg-zinc-800 dark:bg-white opacity-0 scale-x-0 transition-all duration-200;
+  }
+  .nav-link:hover .nav-anim-link::after {
+    @apply opacity-80 scale-x-100;
   }
 
-  header.compact .site-name {
-    @apply text-base md:text-xl;
+  .glass-nav .container {
+    width: auto;
   }
 
   @media (max-width: 640px) {
-    header .container {
-      @apply px-3;
+    .glass-nav .container {
+      @apply px-1;
     }
 
-    .nav-menu {
-      @apply gap-2;
+    .nav-links-container {
+      @apply gap-0;
     }
 
     .nav-link {
-      @apply px-1.5 py-0.5;
+      @apply px-2 py-1;
     }
   }
 
@@ -135,7 +209,6 @@
   html.dark article.prose strong {
     color: rgba(255,255,255,1) !important;
   }
-}
 
 @layer utilities {
   article a {

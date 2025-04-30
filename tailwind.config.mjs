@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
-        serif: ["IBM Plex Serif", ...defaultTheme.fontFamily.serif],
+        sans: ["IBM Plex Sans"],
+        serif: ["IBM Plex Serif"],
       },
       colors: {
         // Custom colors that work well with IBM Plex
