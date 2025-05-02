@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/theme-utilities.css";
 import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/500.css";
 import "@fontsource/ibm-plex-sans/700.css";
@@ -30,9 +31,8 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="src/icons/favicon-dark.svg" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/svg+xml" href="src/icons/favicon-light.svg" media="(prefers-color-scheme: light)">
-<link rel="icon" type="image/x-icon" href="src/icons/favicon-light.svg">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="src/icons/favicon-light.svg">
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
@@ -50,6 +50,34 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+
+<!-- Early theme initialization script - applied before rendering to prevent flash -->
+<script is:inline>
+  (function() {
+    // THIS SCRIPT RUNS EARLY - before DOMContentLoaded
+    const key = 'theme';
+    const stored = localStorage.getItem(key);
+    let isDark;
+    if (stored === 'dark') {
+      isDark = true;
+    } else if (stored === 'light') {
+      isDark = false;
+    } else {
+      // No explicit theme: use system preference
+      isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    document.documentElement.classList.toggle('dark', isDark);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    // Listen for storage events to handle theme changes from other tabs/windows
+    window.addEventListener('storage', (e) => {
+      if (e.key === key) {
+        const isDark = e.newValue === 'dark';
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      }
+    });
+  })();
+</script>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
@@ -69,16 +97,79 @@ const { title, description, image = "/nano.png" } = Astro.props;
 
 <script>
   import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
-  document.addEventListener("astro:before-swap", (e) =>
-    [
-      ...(e as TransitionBeforeSwapEvent).newDocument.head.querySelectorAll(
-        "link[as=\"font\"]"
-      ),
-    ].forEach((link) => link.remove())
-  );
+  document.addEventListener("astro:before-swap", (e) => {
+    const event = e as TransitionBeforeSwapEvent;
+    
+    // Preserve fonts to prevent unnecessary reloads
+    [...event.newDocument.head.querySelectorAll("link[as=\"font\"]")].forEach(link => link.remove());
+    
+    // Preserve theme state
+    const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    event.newDocument.documentElement.classList.toggle('dark', currentTheme === 'dark');
+    event.newDocument.documentElement.style.colorScheme = currentTheme === 'dark' ? 'dark' : 'light';
+      // Apply body background color to prevent flash during transition
+    const lightColor = 'oklch(0.967 0.001 286.375)';
+    const darkColor = 'oklch(0.25 0.001 286.375)';
+    const bgColor = currentTheme === 'dark' ? darkColor : lightColor;
+      // Set the background color and text colors in the new document
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+      body { 
+        background-color: ${bgColor} !important; 
+      }
+      /* Force dark mode text colors when dark class is present */
+      html.dark .text-zinc-700, 
+      html.dark .dark\\:text-zinc-200 { 
+        color: rgba(228, 228, 231, 0.9) !important; 
+      }
+      html.dark .text-black, 
+      html.dark .dark\\:text-white { 
+        color: rgba(255, 255, 255, 0.9) !important; 
+      }
+      /* Force light mode text colors when dark class is absent */
+      html:not(.dark) .dark\\:text-zinc-200, 
+      html:not(.dark) .text-zinc-700 { 
+        color: rgba(63, 63, 70, 0.9) !important; 
+      }
+      html:not(.dark) .dark\\:text-white, 
+      html:not(.dark) .text-black { 
+        color: rgba(0, 0, 0, 0.9) !important; 
+      }
+    `;
+    event.newDocument.head.appendChild(styleEl);
+  });
+    // After transition completes
+  document.addEventListener("astro:after-transition", () => {
+    // Apply current theme color
+    const isDark = document.documentElement.classList.contains('dark');
+    const lightColor = 'oklch(0.967 0.001 286.375)';
+    const darkColor = 'oklch(0.25 0.001 286.375)';
+    
+    // Force theme-specific styles
+    document.body.style.transition = 'none';
+    document.body.style.backgroundColor = isDark ? darkColor : lightColor;
+    
+    // Force text colors to update
+    const textElements = document.querySelectorAll('.text-zinc-700, .text-zinc-200, .text-black, .text-white');
+    textElements.forEach(el => {
+      if (el instanceof HTMLElement) {
+        // Force a repaint
+        el.style.transition = 'none';
+        el.style.color = window.getComputedStyle(el).color;
+        void el.offsetHeight;
+        el.style.transition = '';
+      }
+    });
+    
+    // Re-enable transitions after a brief delay
+    setTimeout(() => {
+      document.body.style.transition = '';
+    }, 20);
+  });
 </script>
 
-<script is:inline>
+<!-- Non-theme functionality script -->
+<script is:inline type="module">
   const debounce = (func, wait) => {
     let timeout;
     return function executedFunction(...args) {
@@ -92,7 +183,6 @@ const { title, description, image = "/nano.png" } = Astro.props;
   };
 
   function init() {
-    preloadTheme();
     onScroll();
     animate();
 
@@ -100,25 +190,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
     backToTop?.addEventListener("click", (event) => scrollToTop(event));
 
     const backToPrev = document.getElementById("back-to-prev");
-    backToPrev?.addEventListener("click", () => window.history.back());    const themeToggle = document.querySelector(".theme-controller");
-    if (themeToggle instanceof HTMLInputElement) {
-      themeToggle.checked = document.documentElement.classList.contains("dark");
-      themeToggle.addEventListener("change", (e) => {
-        const target = e.target;
-        if (target instanceof HTMLInputElement) {
-          const theme = target.checked ? "dark" : "light";
-          localStorage.setItem("theme", theme);
-          toggleTheme(theme);
-        }
-      });
-    }
-
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", event => {
-        if (localStorage.theme === "system") {
-          toggleTheme(event.matches ? "dark" : "light");
-        }
-      });
+    backToPrev?.addEventListener("click", () => window.history.back());
 
     document.addEventListener("scroll", debounce(onScroll, 10));
   }
@@ -147,23 +219,34 @@ const { title, description, image = "/nano.png" } = Astro.props;
       behavior: "smooth"
     });
   }
-  function toggleTheme(theme) {
-    requestAnimationFrame(() => {
-      document.documentElement.classList.toggle("dark", theme === "dark");
-    });
-  }
-
-  function preloadTheme() {
-    const userTheme = localStorage.theme;
-    if (userTheme === "light" || userTheme === "dark") {
-      toggleTheme(userTheme);
-    } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      toggleTheme(systemTheme);
-    }
-  }
 
   document.addEventListener("DOMContentLoaded", () => init());
   document.addEventListener("astro:after-swap", () => init());
-  preloadTheme();
+</script>
+<!-- Early theme initialization script - applied before any CSS to prevent FOUC -->
+<script is:inline>
+  (function() {
+    // THIS SCRIPT RUNS EARLY - before DOMContentLoaded
+    const key = 'theme';
+    const stored = localStorage.getItem(key);
+    let isDark;
+    if (stored === 'dark') {
+      isDark = true;
+    } else if (stored === 'light') {
+      isDark = false;
+    } else {
+      // No explicit theme: use system preference
+      isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    document.documentElement.classList.toggle('dark', isDark);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    // Listen for storage events to handle theme changes from other tabs/windows
+    window.addEventListener('storage', (e) => {
+      if (e.key === key) {
+        const isDark = e.newValue === 'dark';
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      }
+    });
+  })();
 </script>

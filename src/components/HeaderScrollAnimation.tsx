@@ -93,18 +93,16 @@ export default function HeaderScrollAnimation({ SITE_NAME, navLinks }: Props) {
       delay: 0.1 + i * 0.07
     })),
     [navLinks]
-  );
-  // Cache icon components to avoid recreation on every render
+  );  // Cache icon components to avoid recreation on every render
   const cachedIcons = useMemo(() => {
-    const defaultSize = 24;
     return {
-      home: <Home size={defaultSize} />,
-      blog: <Blog size={defaultSize} />,
-      projects: <Portfolio size={defaultSize} />,
-      portfolio: <Portfolio size={defaultSize} />,
-      work: <UserProfile size={defaultSize} />,
-      about: <UserProfile size={defaultSize} />,
-      contact: <Email size={defaultSize} />
+      home: Home,
+      blog: Blog,
+      projects: Portfolio,
+      portfolio: Portfolio,
+      work: UserProfile,
+      about: UserProfile,
+      contact: Email
     };
   }, []);
     // Optimized icon size value getter with better performance
@@ -114,15 +112,6 @@ export default function HeaderScrollAnimation({ SITE_NAME, navLinks }: Props) {
       return typeof size === "number" ? size : 24;
     }
   , [iconSize]);
-
-  // Add a small gap between icon and text with consistent alignment
-  const navIconStyles = useMemo(() => ({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: "0.5rem",
-    lineHeight: 1
-  }), []);
 
   return (
     <motion.div
@@ -144,19 +133,9 @@ export default function HeaderScrollAnimation({ SITE_NAME, navLinks }: Props) {
         scale: headerScale,
         y: headerY,
         "--scroll-progress": scrollProgress as any
-      }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-    >      
-      <motion.div 
-        className="glass-grain absolute inset-0 z-[1]" 
-        animate={{ 
-          filter: "hue-rotate(0deg)"
-        }}
-        whileHover={{ 
-          filter: "hue-rotate(10deg)" 
-        }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-      ></motion.div>      
+      }}      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
+      <div className="glass-grain absolute inset-0 z-[1]"></div>
       <motion.div
         className="container w-full mx-auto h-full flex items-center justify-center"
         style={{
@@ -210,9 +189,9 @@ export default function HeaderScrollAnimation({ SITE_NAME, navLinks }: Props) {
                   whileHover="hover"
                   className="inline-block m-0.5 flex-shrink-0"
                 >
-                  <a href={link.href} className="nav-link inline-block" aria-label={link.label}>
-                    <motion.span
+                  <a href={link.href} className="nav-link inline-block" aria-label={link.label}>                    <motion.span
                       className="nav-link-label"
+                      initial={{ filter: "drop-shadow(0 0 0 rgba(0, 0, 0, 0))" }}
                       whileHover={{
                         y: -2,
                         scale: 1.03,
@@ -228,8 +207,7 @@ export default function HeaderScrollAnimation({ SITE_NAME, navLinks }: Props) {
                             height: iconSize,
                           }}
                           className="flex items-center justify-center"
-                        >
-                          {React.cloneElement(cachedIcons[link.label.toLowerCase()] || <span />, {
+                        >                          {React.createElement(cachedIcons[link.label.toLowerCase()] || 'span', {
                             size: getIconSizeValue(),
                             style: { display: "block" }
                           })}

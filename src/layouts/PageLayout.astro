@@ -17,11 +17,66 @@ const { title, description } = Astro.props;
   <head>
     <Head title={`${title} | ${SITE.NAME}`} description={description} />
   </head>
-  <body>
+  <body class="transition-colors duration-300 ease-in-out">
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+      <script is:inline>
+      // Handler for theme preservation during navigation and page loads
+      document.addEventListener('astro:page-load', () => {
+        // Get current theme
+        const isDark = document.documentElement.classList.contains('dark');
+        
+        // Define our theme colors (must match CSS)
+        const lightColor = 'oklch(0.967 0.001 286.375)';
+        const darkColor = 'oklch(0.25 0.001 286.375)';
+        
+        // Force immediate color application
+        requestAnimationFrame(() => {
+          // Apply theme-specific attributes to help CSS selectors work
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          
+          // Apply background color immediately
+          document.body.style.transition = 'none';
+          document.body.style.backgroundColor = isDark ? darkColor : lightColor;
+          
+          // Trigger reflow to ensure changes are applied
+          void document.documentElement.offsetHeight;
+          
+          // Re-enable transitions
+          requestAnimationFrame(() => {
+            document.body.style.transition = '';
+          });
+          
+          // Synchronize all theme controllers
+          document.querySelectorAll('.theme-controller').forEach(input => {
+            if (input instanceof HTMLInputElement) {
+              input.checked = isDark;
+            }
+          });
+        });
+      });
+      
+      // Listen for system color scheme changes
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          // Only apply if user hasn't set an explicit preference
+          if (!localStorage.getItem('theme')) {
+            const isDark = e.matches;
+            document.documentElement.classList.toggle('dark', isDark);
+            document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+            
+            // Update theme controllers
+            document.querySelectorAll('.theme-controller').forEach(input => {
+              if (input instanceof HTMLInputElement) {
+                input.checked = isDark;
+              }
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>

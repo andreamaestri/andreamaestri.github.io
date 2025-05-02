@@ -36,169 +36,153 @@ const work = await Promise.all(
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <Container>    <div class="mx-auto">
-    <div class="flex animate">
-      <div class="bg-blue-600 shadow-xl animate p-4 rounded-lg">
-        <h1
-          class="animate font-semibold font-bold bg-clip-text text-transparent bg-gradient-to-t from-zinc-200 to-zinc-50 dark:from-zinc-100 dark:to-white text-6xl py-3 px-1"
-        >
-          Hi, I'm Andrea <span class="text-6xl text-black dark:text-white">👋</span>
-        </h1>
+  <Container>
+    <div class="mx-auto">
+      <div class="flex animate">
+        <div class="bg-indigo-600 shadow-xl animate p-4 rounded-lg">
+          <h1
+            class="animate font-bold bg-clip-text text-transparent bg-gradient-to-t from-zinc-200 to-zinc-50 dark:from-zinc-100 dark:to-white text-6xl py-3 px-1"
+          >
+            Hi, I'm Andrea <span class="text-6xl text-black dark:text-white"
+              >👋</span
+            >
+          </h1>
+        </div>
       </div>
     </div>
-    <div class="flex justify-end">
-      <ul class="text-zinc-700 dark:text-zinc-200 mt-3 p-2 bg-gray-200 dark:bg-zinc-800 rounded-lg text-black dark:text-white flex flex-row flex-wrap content-evenly text-sm shadow-md animate-float">
-      {[...SOCIALS, { NAME: SITE.EMAIL, HREF: `mailto:${SITE.EMAIL}`, ICON: "carbon:email" }].map((SOCIAL) => (
-        <li class="mr-2 text-zinc-700 dark:text-zinc-200">
-        <Link
-          data-tip={`${SOCIAL.NAME}`}
-          href={SOCIAL.HREF}
-          external
-          aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}
-          tooltip
-        >
-          <Icon name={`${SOCIAL.ICON}`} />
-        </Link>
-        </li>
-      ))}
-      </ul>
-    </div>
-  </div>
     <div class="space-y-16 mx-auto">
       <section>
         <article class="space-y-4">
-          <p class="animate text-zinc-700 dark:text-zinc-200">
-            A creative professional turned into code/tech enthusiast who's
-            currently diving headfirst into the world of software development
-            through an intensive bootcamp at <b>Headforwards Digital Academy</b> &
-            <b>CodeInstitute.</b>
-          </p>
-          <p class="animate text-zinc-700 dark:text-zinc-200">
-            My journey is pretty unique – I've experience in game art (where I
-            worked on projects for <b>SEGA and Kwalee</b>) and even managed virtual
-            accounts at <b>Deliveroo</b>!
-          </p>
-          <p class="animate text-zinc-700 dark:text-zinc-200">
-            Now, I'm embracing my artistic background and analytical mindset
-            into building beautiful, functional code. When I'm not tackiling
-            coding challenges, you'll find me experimenting with recipes in the
-            kitchen, walking around <b>Cornwall's</b> breathtaking landscapes, or
-            exploring story-driven video games for inspiration.
-          </p>
+          <section>
+            <article class="space-y-4">
+              <p class="animate text-zinc-700 dark:text-zinc-200">
+                A creative professional turned into code/tech enthusiast who's
+                currently diving headfirst into the world of software
+                development through an intensive bootcamp at <b
+                  >Headforwards Digital Academy</b
+                > &
+                <b>CodeInstitute.</b>
+              </p>
+              <p class="animate text-zinc-700 dark:text-zinc-200">
+                My journey is pretty unique – I've experience in game art (where
+                I worked on projects for <b>SEGA and Kwalee</b>) and even
+                managed virtual accounts at <b>Deliveroo</b>!
+              </p>
+              <p class="animate text-zinc-700 dark:text-zinc-200">
+                Now, I'm embracing my artistic background and analytical mindset
+                into building beautiful, functional code. When I'm not tackiling
+                coding challenges, you'll find me experimenting with recipes in
+                the kitchen, walking around <b>Cornwall's</b> breathtaking landscapes,
+                or exploring story-driven video games for inspiration.
+              </p>
+            </article>
+          </section>
+
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap gap-y-2 items-center justify-between">
+              <h5 class="font-semibold text-black dark:text-white">
+                Latest posts
+              </h5>
+              <Link
+                href="/blog"
+                class="text-indigo-500 dark:text-indigo-200 hover:underline"
+              >
+                See all posts
+              </Link>
+            </div>
+            <ul class="text-black dark:text-white flex flex-col gap-4">
+              {
+                blog.map((post) => (
+                  <li>
+                    <ArrowCard entry={post} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap gap-y-2 items-center justify-between">
+              <h5 class="font-semibold text-black dark:text-white">
+                Work Experience
+              </h5>
+              <Link
+                href="/work"
+                class="text-indigo-500 dark:text-indigo-200 hover:underline"
+              >
+                See all work
+              </Link>
+            </div>
+            <ul
+              class="text-zinc-700 dark:text-zinc-200 flex flex-col space-y-4"
+            >
+              {
+                work.map((entry) => (
+                  <li>
+                    <div class="text-sm opacity-75">
+                      {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+                    </div>
+                    <div class="font-semibold text-black dark:text-white">
+                      {entry.data.company}
+                    </div>
+                    <div class="text-sm opacity-75">{entry.data.role}</div>
+                    <article class="prose dark:prose-invert font-sans">
+                      <entry.Content />
+                    </article>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap gap-y-2 items-center justify-between">
+              <h5 class="font-semibold text-black dark:text-white">
+                Recent projects
+              </h5>
+              <Link
+                href="/projects"
+                class="text-indigo-500 dark:text-indigo-200 hover:underline"
+              >
+                See all projects
+              </Link>
+            </div>
+            <ul class="text-zinc-700 dark:text-zinc-200 flex flex-col gap-4">
+              {
+                projects.map((project) => (
+                  <li>
+                    <ArrowCard entry={project} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+          <section class="animate space-y-4">
+            <div class="flex flex-start">
+              <div class="relative">
+                <div class="bg-indigo-600 text-white p-4 rounded-lg shadow-md">
+                  <div class="absolute -right-2 -top-2"><Confetti /></div>
+                  <h5 class="font-semibold">Let's Connect!!</h5>
+                </div>
+              </div>
+              <br />
+              <div class="flex flex-start">
+                <div
+                  class="mt-3 animate bg-indigo-600 p-4 rounded-lg shadow-md"
+                >
+                  <article>
+                    <p class="text-white">
+                      If you want to get in touch with me about something or
+                      just to say hi, reach out on social media or send me an
+                      email.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </section>
         </article>
       </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">Latest posts</h5>
-          <Link href="/blog"> See all posts </Link>
-        </div>
-        <ul class="text-zinc-700 dark:text-zinc-200 flex flex-col gap-4">
-          {
-            blog.map((post) => (
-              <li class="text-zinc-700 dark:text-zinc-200">
-                <ArrowCard entry={post} />
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Work Experience
-          </h5>
-          <Link href="/work"> See all work </Link>
-        </div>
-        <ul class="text-zinc-700 dark:text-zinc-200 flex flex-col space-y-4">
-          {
-            work.map((entry) => (
-              <li class="text-zinc-700 dark:text-zinc-200">
-                <div class="text-sm opacity-75">
-                  {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-                </div>
-                <div class="font-semibold text-black dark:text-white">
-                  {entry.data.company}
-                </div>
-                <div class="text-sm opacity-75">{entry.data.role}</div>
-                <article class="prose dark:prose-invert font-sans">
-                  <entry.Content />
-                </article>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Recent projects
-          </h5>
-          <Link href="/projects"> See all projects </Link>
-        </div>
-        <ul class="text-zinc-700 dark:text-zinc-200 flex flex-col gap-4">          {
-            projects.map((project) => (
-              <li class="text-zinc-700 dark:text-zinc-200">
-                <ArrowCard entry={project} />
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-      <section class="animate space-y-4">
-        <div class="flex flex-start">
-          <div class="relative">
-        <div class="bg-blue-600 text-white p-4 rounded-lg shadow-md">
-          <div class="absolute -right-2 -top-2"><Confetti /></div>
-          <h5 class="font-semibold">
-            Let's Connect!!
-          </h5>
-        </div>
-          </div>
-          <br />
-          <div class="flex flex-start">
-        <div class="mt-3 animate bg-blue-600 p-4 rounded-lg shadow-md">          <article>
-            <p class="text-white">
-          If you want to get in touch with me about something or just to
-          say hi, reach out on social media or send me an email.
-            </p>
-          </article>
-        </div>
-          </div>
-        </div>
-        <div class="flex justify-end">
-          <ul class="text-zinc-700 dark:text-zinc-200 mt-3 p-2 bg-gray-200 rounded-lg text-black flex flex-row flex-wrap text-base shadow-md animate-float"
-          >
-            {
-              SOCIALS.map((SOCIAL) => (
-                <li class="text-zinc-700 dark:text-zinc-200">
-                  <Link
-                    data-tip={`${SOCIAL.NAME}`}
-                    href={SOCIAL.HREF}
-                    external
-                    aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}
-                    tooltip
-                  >
-                    <Icon name={`${SOCIAL.ICON}`} />
-                  </Link>
-                </li>
-              ))
-            }
-            <li class="text-zinc-700 dark:text-zinc-200">
-              <Link
-                data-tip={`${SITE.EMAIL}`}
-                href={`mailto:${SITE.EMAIL}`}
-                aria-label={`Email ${SITE.NAME}`}
-                tooltip
-              >
-                <Icon name="carbon:email" />
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </section>
     </div>
-  </Container>
-</PageLayout>
+  </Container></PageLayout
+>
